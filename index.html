@@ -15,7 +15,7 @@
         Telegram.WebApp.ready();
 
         function timeServer() {
-            fetch("https://spicy-radios-brake.loca.lt/time". {
+            fetch("https://spicy-radios-brake.loca.lt/time", {
                   headers: {
                       "Bypass-Tunnel-Reminder": "true"
                   }
@@ -26,7 +26,8 @@
         })
         .catch(err => {
             document.getElementById("time-result").innerText = "Ошибка: " + err
-        });
+        });          
+        }
 
         function pingServer() {
             fetch("https://spicy-radios-brake.loca.lt/ping", {
