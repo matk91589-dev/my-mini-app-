@@ -10,6 +10,8 @@
     <p id="result"></p>
 
     <script>
+        Telegram.WebApp.ready();
+
         function pingServer() {
             fetch("https://spicy-radios-brake.loca.lt/ping", {
                 headers: {
@@ -19,6 +21,9 @@
             .then(response => response.json())
             .then(data => {
                 document.getElementById("result").innerText = data.message;
+            })
+            .catch(err => {
+                document.getElementById("result").innerText = "Ошибка: " + err;
             });
         }
     </script>
