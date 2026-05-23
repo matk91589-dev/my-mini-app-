@@ -10,9 +10,29 @@
     <p id="result"></p>
     <button onclick="timeServer()">Узнать текущее время</button>
     <p id="time-result"></p>
+    <input type="text" id="note" placeholder="Введи заметку">
+    <button onclick="saveNote()">сохранить</button>
+    <p id="note-result"></p>
 
     <script>
         Telegram.WebApp.ready();
+
+        function saveNote() {
+            const text = document.getElementById("note").value
+
+            fetch("https://stale-chefs-read.loca.lt/notes", {
+                method: "POST",
+                headers: {
+                    "Content-Type: "application/json",
+                    "Bypass-Tunnel_Reminder": "true"
+                },
+                body: JSON.stringify({"text": text})
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("note-result").innerText = data.message;
+            });
+        }
 
         function timeServer() {
             fetch("https://stale-chefs-read.loca.lt/time", {
