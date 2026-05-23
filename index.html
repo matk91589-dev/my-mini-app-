@@ -5,18 +5,18 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Привет, БРО!</h1>
-    <button onclick="alert('Ты нажал кнопку!')">Нажми меня</button>
+    <h1>Mini App + FastAPI</h1>
+    <button onclick="pingServer()">Проверить сервер</button>
+    <p id="result"></p>
 
     <script>
-        alert("Привет js");
-
-        // Получаем строку запроса из URL
-        const params = new URLSearchParams(window.location.search);
-        const tg_id = params.get("tg_id");
-
-        // Показываем на странице
-        document.body.innerHTML += `<p>Твой ID: ${tg_id}</p>`;
+        function pingServer() {
+            fetch("https://tidy-kids-rescue.loca.lt/ping")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("result").innerText = data.message;
+                });
+        }
     </script>
 </body>
 </html>
