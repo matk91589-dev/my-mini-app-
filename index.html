@@ -20,9 +20,9 @@
                       "Bypass-Tunnel-Reminder": "true"
                   }
         })
-        .then(responce => response.json())
+        .then(response => response.json())
         .then(data => {
-            document.getElementById("time-result").innterText = data.time;
+            document.getElementById("time-result").innerText = data.time;
         })
         .catch(err => {
             document.getElementById("time-result").innerText = "Ошибка: " + err
