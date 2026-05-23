@@ -8,9 +8,25 @@
     <h1>Mini App + FastAPI</h1>
     <button onclick="pingServer()">Проверить сервер</button>
     <p id="result"></p>
+    <button onclick="timeServer()">Узнать текущее время</button>
+    <p id="time-result"></p>
 
     <script>
         Telegram.WebApp.ready();
+
+        function timeServer() {
+            fetch("https://spicy-radios-brake.loca.lt/time". {
+                  headers: {
+                      "Bypass-Tunnel-Reminder": "true"
+                  }
+        })
+        .then(responce => response.json())
+        .then(data => {
+            document.getElementById("time-result").innterText = data.time;
+        })
+        .catch(err => {
+            document.getElementById("time-result").innerText = "Ошибка: " + err
+        });
 
         function pingServer() {
             fetch("https://spicy-radios-brake.loca.lt/ping", {
