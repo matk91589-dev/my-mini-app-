@@ -11,11 +11,15 @@
 
     <script>
         function pingServer() {
-            fetch("https://spicy-radios-brake.loca.lt/ping")
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById("result").innerText = data.message;
-                });
+            fetch("https://spicy-radios-brake.loca.lt/ping", {
+                headers: {
+                    "Bypass-Tunnel-Reminder": "true"
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("result").innerText = data.message;
+            });
         }
     </script>
 </body>
