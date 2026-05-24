@@ -27,6 +27,6 @@ button:active {
 }
 
 button:hover {
-    background-color(#red);
+    background-color #red;
     transform: scale(1.05);
 }
