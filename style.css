@@ -18,12 +18,13 @@ button {
     font-size: 18px;
     border-radius: 10px;
     cursor: pointer;
-    transition: all 0.5s ease;
+    transition: all 0.1s ease;
 }
 
 button:active {
     background-color: green;
     transform: scale(0.95);
+    touch-action: manipulation;
     opacity: 0.8;
 }
 
