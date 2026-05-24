@@ -22,11 +22,12 @@ button {
 }
 
 button:active {
+    background-color: green;
     transform: scale(0.95);
     opacity: 0.8;
 }
 
 button:hover {
-    background-color red;
+    background-color: red;
     transform: scale(1.05);
 }
