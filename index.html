@@ -15,7 +15,10 @@
     <p id="note-result"></p>
 
     <script>
-        Telegram.WebApp.ready();
+        if (window.Telegram && Telegram.WebApp){
+            Telegram.WebApp.ready();  
+        }
+        
         const server = "https://violet-clocks-relax.loca.lt";
 
         function saveNote() {
