@@ -26,15 +26,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/api/ping")
+@app.get("/ping")
 def ping():
     return {"status": "ok", "message": "Сервер жив!"}
 
-@app.get("/api/time")
+@app.get("/time")
 def get_time():
     return {"time": datetime.datetime.now().isoformat()}
 
-@app.post("/api/notes")
+@app.post("/notes")
 def save_notes(note: NoteRequest):
     text = note.text
     cursor.execute("INSERT INTO my_app (text, create_at) VALUES (?, ?)", (text, int(time.time())))
