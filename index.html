@@ -16,11 +16,12 @@
 
     <script>
         Telegram.WebApp.ready();
+         const server = "https://violet-clocks-relax.loca.lt"
 
         function saveNote() {
             const text = document.getElementById("note").value
 
-            fetch("https://stale-chefs-read.loca.lt/notes", {
+            fetch(`${server}/notes`, {
                 method: "POST",
                 headers: {
                     "Content-Type: "application/json",
@@ -35,7 +36,7 @@
         }
 
         function timeServer() {
-            fetch("https://stale-chefs-read.loca.lt/time", {
+            fetch(`${server}/time`, {
                   headers: {
                       "Bypass-Tunnel-Reminder": "true"
                   }
@@ -50,7 +51,7 @@
         }
 
         function pingServer() {
-            fetch("https://stale-chefs-read.loca.lt/ping", {
+            fetch(`${server}/ping`, {
                 headers: {
                     "Bypass-Tunnel-Reminder": "true"
                 }
