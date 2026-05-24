@@ -18,7 +18,7 @@ button {
     font-size: 18px;
     border-radius: 10px;
     cursor: pointer;
-    transition: 0.1s ease;
+    transition: all 0.1s ease;
 }
 
 button:active {
@@ -27,6 +27,6 @@ button:active {
 }
 
 button:hover {
-    background-color #red;
+    background-color red;
     transform: scale(1.05);
 }
