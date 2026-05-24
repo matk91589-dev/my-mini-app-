@@ -24,8 +24,8 @@
             fetch(`${server}/notes`, {
                 method: "POST",
                 headers: {
-                    "Content-Type: "application/json",
-                    "Bypass-Tunnel_Reminder": "true"
+                    "Content-Type": "application/json",
+                    "Bypass-Tunnel-Reminder": "true"
                 },
                 body: JSON.stringify({"text": text})
             })
