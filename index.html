@@ -15,50 +15,44 @@
     <p id="note-result"></p>
 
     <script>
-        if (window.Telegram && Telegram.WebApp){
-            Telegram.WebApp.ready();  
+        if (window.Telegram && Telegram.WebApp) {
+            Telegram.WebApp.ready();
         }
-        
+
         const server = "https://my-mini-app-iq1t.onrender.com";
 
         function saveNote() {
-            const text = document.getElementById("note").value
+            const text = document.getElementById("note").value;
 
             fetch(`${server}/notes`, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
-                    "Bypass-Tunnel-Reminder": "true"
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({"text": text})
             })
             .then(response => response.json())
             .then(data => {
                 document.getElementById("note-result").innerText = data.message;
+            })
+            .catch(err => {
+                document.getElementById("note-result").innerText = "Ошибка: " + err;
             });
         }
 
         function timeServer() {
-            fetch(`${server}/time`, {
-                  headers: {
-                      "Bypass-Tunnel-Reminder": "true"
-                  }
-        })
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById("time-result").innerText = data.time;
-        })
-        .catch(err => {
-            document.getElementById("time-result").innerText = "Ошибка: " + err
-        });          
+            fetch(`${server}/time`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("time-result").innerText = data.time;
+            })
+            .catch(err => {
+                document.getElementById("time-result").innerText = "Ошибка: " + err;
+            });
         }
 
         function pingServer() {
-            fetch(`${server}/ping`, {
-                headers: {
-                    "Bypass-Tunnel-Reminder": "true"
-                }
-            })
+            fetch(`${server}/ping`)
             .then(response => response.json())
             .then(data => {
                 document.getElementById("result").innerText = data.message;
