@@ -15,6 +15,7 @@ cursor.execute("""
         create_at INTEGER
     )
 """)
+conn.commit()
 
 class NoteRequest(BaseModel):
     text: str
@@ -36,7 +37,10 @@ def get_time():
 
 @app.post("/notes")
 def save_notes(note: NoteRequest):
-    text = note.text
-    cursor.execute("INSERT INTO my_app (text, create_at) VALUES (?, ?)", (text, int(time.time())))
-    conn.commit()
-    return {"status": "ok", "message": "Заметка сохранена"}
+    try:
+        text = note.text
+        cursor.execute("INSERT INTO my_app (text, create_at) VALUES (?, ?)", (text, int(time.time())))
+        conn.commit()
+        return {"status": "ok", "message": "Заметка сохранена"}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
