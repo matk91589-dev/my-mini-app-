@@ -10,14 +10,14 @@
     <p id="result"></p>
     <button class="btn-time" onclick="timeServer()">Узнать текущее время</button>
     <p id="time-result"></p>
-    <input type="text" id="note" placeholder="Введи заметку">
+    <input type="text" class="my-input" id="note" placeholder="Введи заметку">
     <button class="btn-save" onclick="saveNote()">сохранить</button>
     <p id="note-result"></p>
 
     <div class="card">
         <h3>Мои Заметки</h3>
-        <button onclick="listNote()">показать</button>
-        <p id="notes-list"></p>
+        <button class="btn-show" onclick="listNote()">показать</button>
+        <p class="text-show" id="notes-list"></p>
     </div>
 
     <script>
