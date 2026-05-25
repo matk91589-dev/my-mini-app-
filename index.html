@@ -10,7 +10,7 @@
     <p id="result"></p>
     <button class="btn-time" onclick="timeServer()">Узнать текущее время</button>
     <p id="time-result"></p>
-    <input type="text" class="my-input" id="note" placeholder="Введи заметку">
+    <input type="text" class="my-input" id="note" placeholder="Введи заметку" oninput="clearResult()">
     <button class="btn-save" onclick="saveNote()">сохранить</button>
     <p id="note-result"></p>
 
@@ -64,6 +64,9 @@
             .then(response => response.json())
             .then(data => {
                 document.getElementById("result").innerText = data.message;
+                setTimeout(() => {
+                    document.getElementById("result").innerText = '';
+                }, 10000);
             })
             .catch(err => {
                 document.getElementById("result").innerText = "Ошибка: " + err;
@@ -75,10 +78,15 @@
             .then(response => response.json())
             .then(data => {
                 document.getElementById("notes-list").innerText = data.text;
+                setTimeout(() => {document.getElementById("notes-list").innerText = ''}, 10000);
             })
             .catch(err =>{
                 document.getElementById("notes-list").innerText = "Ошибка:" + err;
             });
+        }
+
+        function clearResult(){
+            document.getElementById("note").value = '';
         }
         
     </script>
