@@ -9,8 +9,9 @@ conn = sqlite3.connect("database.db", check_same_thread=False)
 cursor = conn.cursor()
 
 cursor.execute("""
-    CREATE TABLE IF NOT EXISTS my_app(
+    CREATE TABLE IF NOT EXISTS mini-app-pj(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER,
         text TEXT,
         create_at INTEGER
     )
@@ -18,6 +19,7 @@ cursor.execute("""
 
 class NoteRequest(BaseModel):
     text: str
+    user_id: int
 
 app.add_middleware(
     CORSMiddleware,
@@ -35,8 +37,8 @@ def get_time():
     return {"time": datetime.datetime.now().isoformat()}
 
 @app.get("/list")
-def get_list():
-    cursor.execute("SELECT text FROM my_app ORDER BY id DESC")
+def get_list(user_id: int):
+    cursor.execute("SELECT text FROM my_app WHERE user_id = ? ORDER BY id DESC", (user_id, ))
     rows = cursor.fetchall()
     if rows:
         text = [text[0] for text in rows]
@@ -46,6 +48,7 @@ def get_list():
 @app.post("/notes")
 def save_notes(note: NoteRequest):
     text = note.text
-    cursor.execute("INSERT INTO my_app (text, create_at) VALUES (?, ?)", (text, int(time.time())))
+    user_id = note.user_id
+    cursor.execute("INSERT INTO my_app (user_id, text, create_at) VALUES (?, ?, ?)", (user_id, text, int(time.time())))
     conn.commit()
     return {"status": "ok", "message": "Заметка сохранена"}
