@@ -9,7 +9,7 @@ conn = sqlite3.connect("database.db", check_same_thread=False)
 cursor = conn.cursor()
 
 cursor.execute("""
-    CREATE TABLE IF NOT EXISTS mini-app-pj(
+    CREATE TABLE IF NOT EXISTS mini-app(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         user_id INTEGER,
         text TEXT,
@@ -38,7 +38,7 @@ def get_time():
 
 @app.get("/list")
 def get_list(user_id: int):
-    cursor.execute("SELECT text FROM mini-app-pj WHERE user_id = ? ORDER BY id DESC", (user_id, ))
+    cursor.execute("SELECT text FROM mini-app WHERE user_id = ? ORDER BY id DESC", (user_id, ))
     rows = cursor.fetchall()
     if rows:
         text = [text[0] for text in rows]
@@ -49,6 +49,6 @@ def get_list(user_id: int):
 def save_notes(note: NoteRequest):
     text = note.text
     user_id = note.user_id
-    cursor.execute("INSERT INTO mini-app-pj (user_id, text, create_at) VALUES (?, ?, ?)", (user_id, text, int(time.time())))
+    cursor.execute("INSERT INTO mini-app (user_id, text, create_at) VALUES (?, ?, ?)", (user_id, text, int(time.time())))
     conn.commit()
     return {"status": "ok", "message": "Заметка сохранена"}
