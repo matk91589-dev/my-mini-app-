@@ -26,6 +26,8 @@
         }
 
         const server = "https://my-mini-app-iq1t.onrender.com";
+        const params = new URLSearchParams(window.location.search);
+        const user_id = params.get("tg_id")
 
         function saveNote() {
             const text = document.getElementById("note").value;
@@ -35,7 +37,7 @@
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({"text": text})
+                body: JSON.stringify({"text": text, "user_id": user_id})
             })
             .then(response => response.json())
             .then(data => {
@@ -69,7 +71,7 @@
         }
 
         function listNote() {
-            fetch(`${server}/list`)
+            fetch(`${server}/list?user_id=${user_id}`)
             .then(response => response.json())
             .then(data => {
                 document.getElementById("notes-list").innerText = data.text;
