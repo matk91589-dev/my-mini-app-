@@ -42,6 +42,7 @@
             .then(response => response.json())
             .then(data => {
                 document.getElementById("note-result").innerText = data.message;
+                document.getElementById("note").value = '';
             })
             .catch(err => {
                 document.getElementById("note-result").innerText = "Ошибка: " + err;
@@ -86,7 +87,7 @@
         }
 
         function clearResult(){
-            document.getElementById("note").value = '';
+            document.getElementById("note-result").innerResult = '';
         }
         
     </script>
