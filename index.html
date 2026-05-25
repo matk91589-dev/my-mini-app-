@@ -75,8 +75,8 @@
                 document.getElementById("notes-list").innerText = data.text;
             })
             .catch(err =>{
-                document.getElementById("result").innerText = "Ошибка": + err
-            })
+                document.getElementById("notes-list").innerText = "Ошибка": + err
+            });
         }
         
     </script>
