@@ -14,6 +14,12 @@
     <button onclick="saveNote()">сохранить</button>
     <p id="note-result"></p>
 
+    <div class="card">
+        <h3>Мои Заметки</h3>
+        <button onclick="listNote()">показать</button>
+        <p id="notes-list"></p>
+    </div>
+
     <script>
         if (window.Telegram && Telegram.WebApp) {
             Telegram.WebApp.ready();
@@ -61,6 +67,18 @@
                 document.getElementById("result").innerText = "Ошибка: " + err;
             });
         }
+
+        function listNote() {
+            fetch(`${server}/list`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("notes-list").innerText = data.text;
+            })
+            .catch(err =>{
+                document.getElementById("result").innerText = "Ошибка": + err
+            })
+        }
+        
     </script>
 </body>
 </html>
