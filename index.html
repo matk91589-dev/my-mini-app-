@@ -5,22 +5,19 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Mini App + FastAPI</h1>
-    <button class="btn-server" onclick="pingServer()">Проверить сервер</button>
-    <p id="result"></p>
-    <button class="btn-time" onclick="timeServer()">Узнать текущее время</button>
-    <p id="time-result"></p>
-    <input type="text" class="my-input" id="note" placeholder="Введи заметку" oninput="clearResult()">
-    <button class="btn-save" onclick="saveNote()">сохранить</button>
-    <p id="note-result"></p>
+    <h1>Ping-combat</h1>
 
-    <div class="card">
-        <h3>Мои Заметки</h3>
-        <button class="btn-show" onclick="listNote()">показать</button>
-        <p class="text-show" id="notes-list"></p>
+    <div class="ping-combat">
+        <button id="ping-btn">❤️</button>
+        <p class="text" id="ping-text"></p>
     </div>
 
+    <div class="score">
+        <p>Результат: <span id="click-count">0</span></p>
+    </div>    
+
     <script>
+        
         if (window.Telegram && Telegram.WebApp) {
             Telegram.WebApp.ready();
         }
@@ -28,67 +25,27 @@
         const server = "https://my-mini-app-iq1t.onrender.com";
         const params = new URLSearchParams(window.location.search);
         const user_id = params.get("tg_id");
+        
+        let clicks = 0;
+        let timer = null;
 
-        function saveNote() {
-            const text = document.getElementById("note").value;
+        document.getElementById("ping-combat").onclick = () => {
+            clicks++;
+            documnet.getElementById("click-count").innerText = clicks;
 
-            fetch(`${server}/notes`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({"text": text, "user_id": user_id})
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("note-result").innerText = data.message;
-                document.getElementById("note").value = '';
-            })
-            .catch(err => {
-                document.getElementById("note-result").innerText = "Ошибка: " + err;
-            });
-        }
-
-        function timeServer() {
-            fetch(`${server}/time`)
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("time-result").innerText = data.time;
-            })
-            .catch(err => {
-                document.getElementById("time-result").innerText = "Ошибка: " + err;
-            });
-        }
-
-        function pingServer() {
-            fetch(`${server}/ping`)
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("result").innerText = data.message;
-                setTimeout(() => {
-                    document.getElementById("result").innerText = '';
-                }, 10000);
-            })
-            .catch(err => {
-                document.getElementById("result").innerText = "Ошибка: " + err;
-            });
-        }
-
-        function listNote() {
-            fetch(`${server}/list?user_id=${user_id}`)
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("notes-list").innerText = data.text;
-                setTimeout(() => {document.getElementById("notes-list").innerText = ''}, 10000);
-            })
-            .catch(err =>{
-                document.getElementById("notes-list").innerText = "Ошибка:" + err;
-            });
-        }
-
-        function clearResult(){
-            document.getElementById("note-result").innerText = '';
-        }
+            if(timer) clearTimeout(timer);
+            timer = setTimeout(() => {
+                fetch(`${server}/save`, {
+                    method: "POST",
+                    heders: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({"user_id": user_id, "clicks": clicks})
+                });
+                clicks = 0;
+                document.getElementById("click-count").innerText = clicks;
+            }, 20000);
+        };
         
     </script>
 </body>
