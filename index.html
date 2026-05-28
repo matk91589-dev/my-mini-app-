@@ -29,15 +29,15 @@
         let clicks = 0;
         let timer = null;
 
-        document.getElementById("ping-combat").onclick = () => {
+        document.getElementById("ping-btn").onclick = () => {
             clicks++;
-            documnet.getElementById("click-count").innerText = clicks;
+            document.getElementById("click-count").innerText = clicks;
 
             if(timer) clearTimeout(timer);
             timer = setTimeout(() => {
                 fetch(`${server}/save`, {
                     method: "POST",
-                    heders: {
+                    headers: {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({"user_id": user_id, "clicks": clicks})
