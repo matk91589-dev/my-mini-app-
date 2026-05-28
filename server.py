@@ -5,22 +5,19 @@ import datetime, time, sqlite3
 
 app = FastAPI()
 
-conn = sqlite3.connect("database.db", check_same_thread=False)
+conn = sqlite3.connect("database.db")
 cursor = conn.cursor()
 
 cursor.execute("""
-    CREATE TABLE IF NOT EXISTS project(
+    CREATE TABLE IF NOT EXISTS my_app(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        user_id INTEGER,
         text TEXT,
         create_at INTEGER
     )
 """)
-conn.commit()
 
 class NoteRequest(BaseModel):
     text: str
-    user_id: int
 
 app.add_middleware(
     CORSMiddleware,
@@ -29,27 +26,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/ping")
-def ping():
-    return {"status": "ok", "message": "Сервер жив!"}
-
-@app.get("/time")
-def get_time():
-    return {"time": datetime.datetime.now().isoformat()}
-
-@app.get("/list")
-def get_list(user_id: int):
-    cursor.execute("SELECT text FROM project WHERE user_id = ? ORDER BY id DESC", (user_id, ))
-    rows = cursor.fetchall()
-    if rows:
-        text = [text[0] for text in rows]
-        return {"text": '\n'.join(text)}
-    return {"text": "Пока пусто"}
-
-@app.post("/notes")
-def save_notes(note: NoteRequest):
-    text = note.text
-    user_id = note.user_id
-    cursor.execute("INSERT INTO project (user_id, text, create_at) VALUES (?, ?, ?)", (user_id, text, int(time.time())))
-    conn.commit()
-    return {"status": "ok", "message": "Заметка сохранена"}
+@app.post("/save")
+def save():
+    pass
