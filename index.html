@@ -7,6 +7,7 @@
 <body>
 
     <h1>Ping-combat</h1>
+    <h2>Общий Счетчик: <span id="total-clicks"></span></h2>
     
     <div class="container">
         <div class="ping-combat">
@@ -30,6 +31,12 @@
         let clicks = 0;
         let timer = null;
 
+        fetch(`${server}/score?user_id={user_id}`)
+        .then(response => response.json());
+        .then(data => {
+            document.getElementById("total-clicks").innerText = data.total;
+        });
+
         document.getElementById("ping-btn").onclick = () => {
             clicks++;
             console.log("+1")
@@ -45,7 +52,7 @@
                     body: JSON.stringify({"user_id": user_id, "clicks": clicks})
                 });
                 clicks = 0;
-                console.log("Тамер сброшен")
+                console.log("Таймер сброшен")
                 document.getElementById("click-count").innerText = clicks;
             }, 20000);
         };
