@@ -31,7 +31,7 @@
         let clicks = 0;
         let timer = null;
 
-        fetch(`${server}/score?user_id={user_id}`)
+        fetch(`${server}/score?user_id=${user_id}`)
         .then(response => response.json());
         .then(data => {
             document.getElementById("total-clicks").innerText = data.total;
